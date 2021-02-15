@@ -16,5 +16,6 @@ public class Jeu {
     private boolean typeJ2;
     private ArrayList Talon;
     
+    
            
 }
