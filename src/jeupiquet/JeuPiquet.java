@@ -18,7 +18,7 @@ public class JeuPiquet {
      */
     public static void main(String[] args) {
         
-        ArrayList Talon = new ArrayList;
+
         
         
     
