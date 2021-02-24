@@ -17,9 +17,9 @@ public class JeuPiquet {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-
-        
-        
+        Jeu jeu = new Jeu();
+        jeu.initialiserManche();
+        Joueur joueur = new Joueur(, Dupont, 0);
+    }
     
 }
