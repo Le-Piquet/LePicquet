@@ -6,30 +6,44 @@
 package jeupiquet;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
  * @author abour
  */
-public class Paquet {
-    private final String[] couleurs = {"trefle", "pique", "carreau", "coeur"};
-    private final String[] numeros = {"7", "8", "9", "10", "Valet", "Dame", "Roi", "As"};
-    private final int[] pointsCarte = {1, 2, 3, 4, 5, 6, 7, 8};
-    ArrayList Paquet = new ArrayList(31);
-    
-    public void creationPaquet() {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 4; j++) {
-                String couleur = couleurs[j];
-                String numero = numeros[i];
-                int pointCarte = pointsCarte[i];
 
-                Paquet.add(new Carte(couleur, numero, pointCarte));
-            }
-        }
+/*
+
+*/
+public class Paquet {
+    private final String[] _couleurs = {"trefle", "pique", "carreau", "coeur"};
+    private final String[] _numeros = {"7", "8", "9", "10", "Valet", "Dame", "Roi", "As"};
+    private final int[] _pointsCarte = {1, 2, 3, 4, 5, 6, 7, 8};
+    private ArrayList _listeCartes = new ArrayList(31);
+    
+    public Paquet(){
+        
     }
     
-    public ArrayList getPaquet(){
-        return Paquet;
+    public void creerPaquet() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 4; j++) {
+                String couleur = _couleurs[j];
+                String numero = _numeros[i];
+                int pointCarte = _pointsCarte[i];
+
+                _listeCartes.add(new Carte(couleur, numero, pointCarte));
+            }
+        }
+        System.out.println(_listeCartes);
+    }
+    
+    public void melangerPaquet(){
+        Collections.shuffle(_listeCartes);
+    }
+    
+    public ArrayList getListeCartes(){
+        return _listeCartes;
     }
 }
