@@ -24,6 +24,15 @@ public class Carte {
         this.pointCarte = pointCarte;
     }
 
+    @Override
+    public String toString() {
+        return "Carte{" + "couleur=" + couleur + ", numero=" + numero + ", pointCarte=" + pointCarte + '}';
+    }
+
+    public String getCouleur() {
+        return couleur;
+    }
+
 
 
 }

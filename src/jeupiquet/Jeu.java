@@ -19,67 +19,93 @@ public class Jeu {
 
     private Joueur _joueur1 = new Joueur("Dupont", 0);
     private Joueur _joueur2 = new Joueur("Dupuit", 0);
-    private ArrayList _talon;
+    private ArrayList _talon = new ArrayList(8);
     private Paquet _paquet = new Paquet();
 
     public Jeu() {
 
     }
 
-    public ArrayList initialiserManche() {
-//        On mélange le jeu de carte créé auparavant dans la classe Paquet à l'aide de la méthode shuffle.
-       
+    public void initialiserManche() {
+        /*        
+    On distribue les cartes 3 par 3. On prend 3 cartes du paquet que l'on mets dans la main d'un joueur puis nous supprimons ces 3 cartes du paquet.
+    On fait la même chose pour le second joueur. Et nous répettons cette opération 4 fois.
+    Le talon est composé des 8 cartes restantes.
+         */
         _paquet.melangerPaquet();
-
+        
         ArrayList mainJ1 = _joueur1.getMain();
         ArrayList mainJ2 = _joueur2.getMain();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 3; j++) {
-                mainJ1.set((i * 3) + j, _paquet.get(j));
+                mainJ1.add((i * 3) + j, _paquet.getListeCartes().get(j));
                 _joueur1.setMain(mainJ1);
-                _paquet.remove(j);
             }
+            for (int m = 0; m < 3; m++) {
+                _paquet.getListeCartes().remove(0);
+            }
+
             for (int k = 0; k < 3; k++) {
-                mainJ2.set((i * 3) + k, _paquet.get(k));
+                mainJ2.add((i * 3) + k, _paquet.getListeCartes().get(k));
                 _joueur2.setMain(mainJ2);
-                _paquet.remove(k);
+            }
+            
+            for (int n = 0; n < 3; n++) {
+                _paquet.getListeCartes().remove(0);
             }
         }
 
         for (int i = 0; i < 8; i++) {
-            talon.set(i, paquetmelange.get(i));
+            _talon.add(i, _paquet.getListeCartes().get(i));
         }
     }
 
-    public void tirageRoles() {
-
+    public void voirTalon() {
+        for(int i = 0; i<_talon.size(); i++){
+            _talon.get(i).toString();
+        }
     }
 
+    public void annonceCB(Joueur joueur) {
+        joueur.setScore(joueur.getScore() + 10);
+    }
+
+    public void demandePoint(String reponse){
+        if (reponse == "oui"){
+            
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public void setTalon(ArrayList talon) {
-        this.talon = talon;
+        this._talon = talon;
     }
 
     public ArrayList getTalon() {
-        return talon;
+        return _talon;
     }
 
     public Joueur getJoueur1() {
-        return joueur1;
+        return _joueur1;
     }
 
     public void setJoueur1(Joueur joueur1) {
-        this.joueur1 = joueur1;
+        this._joueur1 = joueur1;
     }
 
     public Joueur getJoueur2() {
-        return joueur2;
+        return _joueur2;
     }
 
     public void setJoueur2(Joueur joueur2) {
-        this.joueur2 = joueur2;
+        this._joueur2 = joueur2;
     }
 
-    
-    
-    
 }
