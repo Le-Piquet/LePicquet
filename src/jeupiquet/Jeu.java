@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.lang.Object;
+import java.util.Scanner;
 
 /**
  *
@@ -19,7 +20,7 @@ public class Jeu {
 
     private Joueur _joueur1 = new Joueur("Dupont", 0);
     private Joueur _joueur2 = new Joueur("Dupuit", 0);
-    private ArrayList _talon = new ArrayList(8);
+    private ArrayList<Carte> _talon = new ArrayList(8);
     private Paquet _paquet = new Paquet();
 
     public Jeu() {
@@ -70,9 +71,26 @@ public class Jeu {
         joueur.setScore(joueur.getScore() + 10);
     }
 
-    public void demandePoint(String reponse){
-        if (reponse == "oui"){
-            
+    public void calculerScorePoint(){
+        if (getJoueur1().getNbCartePoint() > getJoueur2().getNbCartePoint()){
+            getJoueur1().setScore(getJoueur1().getScore() + getJoueur1().getNbCartePoint());
+            System.out.println(_joueur1.getPseudo() + " gagne la manche des Points.");
+        }
+        else if (getJoueur1().getNbCartePoint() < getJoueur2().getNbCartePoint()){
+            getJoueur2().setScore(getJoueur2().getScore() + getJoueur2().getNbCartePoint());
+            System.out.println(_joueur2.getPseudo() + " gagne la manche des Points.");
+        }
+        else if (getJoueur1().getNbCartePoint() == getJoueur2().getNbCartePoint()){
+            if (getJoueur1().getValeurPoint() > getJoueur2().getValeurPoint()){
+                getJoueur1().setScore(getJoueur1().getScore() + getJoueur1().getNbCartePoint());
+                System.out.println(_joueur1.getPseudo() + " gagne la manche des Points.");
+            }
+            else if (getJoueur1().getValeurPoint() < getJoueur2().getValeurPoint()){
+                getJoueur2().setScore(getJoueur2().getScore() + getJoueur2().getNbCartePoint());
+                System.out.println(_joueur2.getPseudo() + " gagne la manche des Points.");
+            }
+            else if (getJoueur1().getValeurPoint() == getJoueur2().getValeurPoint()){
+            }
         }
     }
     
@@ -83,12 +101,11 @@ public class Jeu {
     
     
     
-    
-    public void setTalon(ArrayList talon) {
+    public void setTalon(ArrayList<Carte> talon) {
         this._talon = talon;
     }
 
-    public ArrayList getTalon() {
+    public ArrayList<Carte> getTalon() {
         return _talon;
     }
 

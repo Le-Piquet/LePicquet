@@ -26,11 +26,15 @@ public class Carte {
 
     @Override
     public String toString() {
-        return "Carte{" + "couleur=" + couleur + ", numero=" + numero + ", pointCarte=" + pointCarte + '}';
+        return "Carte{" + "couleur=" + couleur + ", numero=" + numero + ", pointCarte=" + pointCarte + '}' + "\n";
     }
 
     public String getCouleur() {
         return couleur;
+    }
+
+    public int getPointCarte() {
+        return pointCarte;
     }
 
 

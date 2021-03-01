@@ -7,6 +7,7 @@ package jeupiquet;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  *
@@ -28,13 +29,13 @@ public class JeuPiquet {
         }
         
         //On crée deux listes qui contiennent l'index de la carte dans la main du joueur. Ces cartes vont être ajoutés dans la liste des cartes écartées.
-        ArrayList <Integer> ecarteJ1 = new ArrayList();
-        ArrayList <Integer> ecarteJ2 = new ArrayList();
-        ecarteJ1.add(0, 1);
-        ecarteJ1.add(1, 5);
-        ecarteJ1.add(2, 11);
-        ecarteJ2.add(0, 3);
-        ecarteJ2.add(1, 8);
+        ArrayList<Integer> ecarteJ1 = new ArrayList<Integer>();
+        ArrayList<Integer> ecarteJ2 = new ArrayList<Integer>();
+        ecarteJ1.add(1);
+        ecarteJ1.add(5);
+        ecarteJ1.add(11);
+        ecarteJ2.add(3);
+        ecarteJ2.add(8);
         jeu.getJoueur1().ecarterCartes(ecarteJ1, jeu.getTalon());
         //On supprime les cartes du talon qui ont été pioché par les joueurs.
         //On crée une nouvelle liste pour pouvoir modifier le talon de la classe Jeu.
@@ -53,5 +54,11 @@ public class JeuPiquet {
             talon.remove(0);     //remove 0 car les cases sont supprimées lorsque l'on remove. Donc on remove a chaque fois la nouvelle première carte du talon
             jeu.setTalon(talon);
         }
+    
+        jeu.getJoueur1().demandePoint(jeu.getJoueur1());
+        jeu.getJoueur2().demandePoint(jeu.getJoueur2());
+        
+        jeu.calculerScorePoint();
+        
     }
 }

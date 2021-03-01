@@ -20,7 +20,7 @@ public class Paquet {
     private final String[] _couleurs = {"trefle", "pique", "carreau", "coeur"};
     private final String[] _numeros = {"7", "8", "9", "10", "Valet", "Dame", "Roi", "As"};
     private final int[] _pointsCarte = {1, 2, 3, 4, 5, 6, 7, 8};
-    private ArrayList _listeCartes = new ArrayList(32);
+    private ArrayList<Carte> _listeCartes = new ArrayList(32);
     
     public Paquet(){
         creerPaquet();
@@ -36,14 +36,13 @@ public class Paquet {
                 _listeCartes.add(new Carte(couleur, numero, pointCarte));
             }
         }
-        System.out.println(_listeCartes);
     }
     
     public void melangerPaquet(){
         Collections.shuffle(_listeCartes);
     }
     
-    public ArrayList getListeCartes(){
+    public ArrayList<Carte> getListeCartes(){
         return _listeCartes;
     }
 }
