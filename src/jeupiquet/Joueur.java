@@ -44,7 +44,9 @@ public class Joueur {
         }
         
     }
-    
+        public Carte prendreCarte(int w) {
+            main.remove(w);
+            return main.get(w); }
      /*
     demandePoint permet de vérifier si les informations fournis par le joueur concernant son point sont correctes ou non. De plus on y determine la couleur 
     dans laquelle le point se situe et le nombre de point que vaut le point.
