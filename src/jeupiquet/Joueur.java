@@ -43,7 +43,13 @@ public class Joueur {
         for (int j = 0; j<ecarte.size(); j++){
             main.add(talon.get(j));
         }
-        
+    }
+    
+    
+    public Carte prendreCarte(int indexCarte) {
+        Carte carteJoueur = main.get(indexCarte);
+        main.remove(indexCarte);
+        return carteJoueur; 
     }
     
      /*
