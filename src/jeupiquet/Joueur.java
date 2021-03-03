@@ -9,9 +9,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-/**
- *
- * @author theobaptiste
+/*
+Fichier dans lequel toutes les méthodes en lien avec les joueurs sont définies.
  */
 public class Joueur {
 
@@ -21,6 +20,7 @@ public class Joueur {
     private int valeurPoint = 0;        //La valeur du point permettant de comparer deux points avec le même nombre de cartes
     private int nbCartePoint = 0;           //Le nombre de cartes du plus grand point du joueur
     private int tailleSequence = 0;         //Le nombre de cartes de la plus grande suite de la meme couleur 
+    private int valeurSequence = 0;             //La valeur de la séquence permettant de comparer deux séquences avec le même nombre de cartes
     
     public Joueur(String pseudo, int score) {
         this.pseudo = pseudo;
@@ -28,33 +28,33 @@ public class Joueur {
         main = new ArrayList(12);
     }
     
-    //ecarterCartes permet au joueur d'écarter les cartes dont il n'a pas besoin et de les remplacer par autant de cartes du talon.
-
-    /**
-     *
-     * @param ecarte
-     * @param talon
-     */
+    //afficherMain() permet d'afficher les mains des deux joueurs dans la console.
+    public void afficherMain(){
+        System.out.println("Main de " + pseudo + " :" + "\n");
+        for (int i = 0; i < main.size(); i++) {
+            System.out.println(main.get(i).toString());
+        }
+    }
+    
+    //ecarterCartes() permet au joueur d'écarter les cartes dont il n'a pas besoin et de les remplacer par autant de cartes du talon.
     public void ecarterCartes(ArrayList<Integer> ecarte, ArrayList<Carte> talon){
         for (int i = 0; i<ecarte.size(); i++){
-            main.remove(ecarte.get(i));
-            //Problème : les cartes ecartées ne sortent pas de la main
+            main.remove(main.get(ecarte.get(i)-i));     //On enleve la carte à la place demandée - i car à chaque carte enlevée, la taille de la liste diminue.
         }
         for (int j = 0; j<ecarte.size(); j++){
             main.add(talon.get(j));
         }
     }
     
-    
+    //prendreCarte() permet au joueur de prendre une carte qu'il choisit dans sa main. Cette carte est ensuite supprimée de sa main.
     public Carte prendreCarte(int indexCarte) {
         Carte carteJoueur = main.get(indexCarte);
         main.remove(indexCarte);
         return carteJoueur; 
     }
     
-     /*
-    demandePoint permet de vérifier si les informations fournis par le joueur concernant son point sont correctes ou non. De plus on y determine la couleur 
-    dans laquelle le point se situe et le nombre de point que vaut le point.
+    /*
+    demandePoint() permet de vérifier si les informations fournis par le joueur concernant son point sont correctes ou non. De plus, on y détermine la valeur du point.
     */
     public void demandePoint(Joueur joueur){
         Scanner sc = new Scanner(System.in);
@@ -71,6 +71,7 @@ public class Joueur {
             int valeurPointCoeur = 0;
             int valeurPointCarreau = 0;
             
+            //On trie les cartes par couleurs. On compte également les valeurs des points des différentes couleurs.
             for (int i = 0; i< joueur.getMain().size(); i++){
                 if (joueur.getMain().get(i).getCouleur().compareTo("trefle") == 0){
                     cartesTrefle.add(joueur.getMain().get(i));
@@ -142,22 +143,24 @@ public class Joueur {
                     valeurPoint = valeurPointCarreau;
                 }
             }
- 
+            
+            //Tant que le joueur n'a pas entré la bonne valeur de son point, nous lui reposons la question. La triche n'est pas envisageable.
             while (propositionPoint != nbCartePoint){
                 System.out.println("La taille du point renseignée est incorrecte. Veuillez recompter puis saisir la bonne taille de votre point.");
                 propositionPoint = sc.nextInt();
             }
         }
-        
-        
     }
     
+    /*
+    demandeSequence() permet de vérifier si les informations fournis par le joueur concernant sa séquence sont correctes ou non. De plus, on y détermine la valeur de la séquence.
+    */
     public void demandeSequence(Joueur joueur){
         Scanner sc = new Scanner(System.in);
         System.out.println(joueur.getPseudo() + ", avez vous une séquence ?");
         if (sc.nextLine().compareTo("oui") == 0){
             System.out.println("Quelle est la taille de votre séquence ?");
-            int propositionSequence = sc.nextInt();            //proposition du joueur concernant la longueur de son plus grand point
+            int propositionSequence = sc.nextInt();            //proposition du joueur concernant la longueur de sa plus grande séquence
             ArrayList<Carte> cartesTrefle = new ArrayList();            //Liste des cartes de couleur trèfle dans la main du joueur
             ArrayList<Carte> cartesPique = new ArrayList();
             ArrayList<Carte> cartesCoeur = new ArrayList();
@@ -197,58 +200,61 @@ public class Joueur {
             int tailleSequencePique = 0;
             int tailleSequenceCoeur = 0;
             int tailleSequenceCarreau = 0;
+            
             /*
             Pour toute les cartes d'une même couleur, si 2 cartes se suivent au niveau des points de carte, la variable tailleTemporaire s'incrémente de 1.
             Si la carte d'après ne continue pas la séquence, tailleTemporaire se réinitialise. Si la séquence formée est plus grande que les précédentes,
             tailleSequence de la couleur prend cette valeur.
             */
-            for (int i = 0; i<cartesTrefle.size(); i++){
-                int tailleTemporaire = 0;
+            int tailleTemporaire = 1;
+            for (int i = 0; i<cartesTrefle.size() - 1; i++){
                 if (valeursCTrefle.get(i+1) == valeursCTrefle.get(i) + 1){
                     tailleTemporaire += 1;
-                    if(tailleTemporaire > tailleSequenceTrefle){
-                        
+                    if(tailleTemporaire >= tailleSequenceTrefle){
                         tailleSequenceTrefle = tailleTemporaire;
                     }
                 }
                 else{
-                    tailleTemporaire = 0;
+                    tailleTemporaire = 1;
                 }
             }
-            for (int i = 0; i<cartesPique.size(); i++){
-                int tailleTemporaire = 0;
+            
+            tailleTemporaire = 1;
+            for (int i = 0; i<cartesPique.size() - 1; i++){
                 if (valeursCPique.get(i+1) == valeursCPique.get(i) + 1){
                     tailleTemporaire += 1;
-                    if(tailleTemporaire > tailleSequencePique){
+                    if(tailleTemporaire >= tailleSequencePique){
                         tailleSequencePique = tailleTemporaire;
                     }
                 }
                 else{
-                    tailleTemporaire = 0;
+                    tailleTemporaire = 1;
                 }
             }
-            for (int i = 0; i<cartesCoeur.size(); i++){
-                int tailleTemporaire = 0;
+            
+            tailleTemporaire = 1;
+            for (int i = 0; i<cartesCoeur.size() - 1; i++){
                 if (valeursCCoeur.get(i+1) == valeursCCoeur.get(i) + 1){
                     tailleTemporaire += 1;
-                    if(tailleTemporaire > tailleSequenceCoeur){
+                    if(tailleTemporaire >= tailleSequenceCoeur){
                         tailleSequenceCoeur = tailleTemporaire;
                     }
                 }
                 else{
-                    tailleTemporaire = 0;
+                    tailleTemporaire = 1;
                 }
             }
-            for (int i = 0; i<cartesCarreau.size(); i++){
-                int tailleTemporaire = 0;
+            
+            tailleTemporaire = 1;
+            for (int i = 0; i<cartesCarreau.size() - 1; i++){
                 if (valeursCCarreau.get(i+1) == valeursCCarreau.get(i) + 1){
                     tailleTemporaire += 1;
-                    if(tailleTemporaire > tailleSequenceCarreau){
+                    if(tailleTemporaire >= tailleSequenceCarreau){
                         tailleSequenceCarreau = tailleTemporaire;
                     }
                 }
                 else{
-                    tailleTemporaire = 0;
+                    tailleTemporaire = 1;
                 }
             }
             
@@ -257,6 +263,7 @@ public class Joueur {
             tailles.add(tailleSequencePique);
             tailles.add(tailleSequenceCoeur);
             tailles.add(tailleSequenceCarreau);
+            //On trie les tailles des plus grandes séquences de chaque couleur pour obtenir la plus grande séquence du joueur.
             Collections.sort(tailles);
             tailleSequence = tailles.get(3);
             
@@ -270,27 +277,81 @@ public class Joueur {
                     ||(tailles.get(3) == tailleSequence && tailles.get(2) == tailleSequence && tailles.get(1) == tailleSequence && tailles.get(1) == tailleSequence)){
                 ArrayList<Integer> triValeurSequences = new ArrayList(4);
                 if (tailleSequenceTrefle == tailleSequence) {
+                    int valeurSequenceTrefle = 0;
+                    //Pour chaque carte de couleur trèfle, si un nombre de cartes égal à tailleSequence se suivent, on relève leurs valeurs et on les additionnent.
                     for(int i = 0; i<cartesTrefle.size(); i++){
+                        int valeurTemporaire = 0;
                         for(int j = 0; j<tailleSequence; j++){
-                            if(cartesTrefle.get(i + 1).getPointCarte() == cartesTrefle.get(i).getPointCarte() + 1){
-                                int valeurSequenceTrefle = 0;
-                                valeurSequenceTrefle += cartesTrefle.get(j).getPointCarte();
+                            if(cartesTrefle.get(i + j + 1).getPointCarte() == cartesTrefle.get(i + j).getPointCarte() + 1){
+                                valeurTemporaire += cartesTrefle.get(i).getPointCarte();
+                                if(valeurTemporaire > valeurSequenceTrefle){
+                                    valeurSequenceTrefle = valeurTemporaire;
+                                }
+                            }
+                            else{
+                                valeurTemporaire = 0;
                             }
                         }   
                     }
-                    triValeurSequences.add(valeurPointTrefle);
+                    triValeurSequences.add(valeurSequenceTrefle);
                 }
                 if (tailleSequencePique == tailleSequence) {
-                    triValeurSequences.add(valeurPointPique);
+                    int valeurSequencePique = 0;
+                    for(int i = 0; i<cartesTrefle.size(); i++){
+                        int valeurTemporaire = 0;
+                        for(int j = 0; j<tailleSequence; j++){
+                            if(cartesTrefle.get(i + j + 1).getPointCarte() == cartesTrefle.get(i + j).getPointCarte() + 1){
+                                valeurTemporaire += cartesTrefle.get(i).getPointCarte();
+                                if(valeurTemporaire > valeurSequencePique){
+                                    valeurSequencePique = valeurTemporaire;
+                                }
+                            }
+                            else{
+                                valeurTemporaire = 0;
+                            }
+                        }   
+                    }
+                    triValeurSequences.add(valeurSequencePique);
                 }
                 if (tailleSequenceCoeur == tailleSequence) {
-                    triValeurSequences.add(valeurPointCoeur);
+                    int valeurSequenceCoeur = 0;
+                    for(int i = 0; i<cartesTrefle.size(); i++){
+                        int valeurTemporaire = 0;
+                        for(int j = 0; j<tailleSequence; j++){
+                            if(cartesTrefle.get(i + j + 1).getPointCarte() == cartesTrefle.get(i + j).getPointCarte() + 1){
+                                valeurTemporaire += cartesTrefle.get(i).getPointCarte();
+                                if(valeurTemporaire > valeurSequenceCoeur){
+                                    valeurSequenceCoeur = valeurTemporaire;
+                                }
+                            }
+                            else{
+                                valeurTemporaire = 0;
+                            }
+                        }   
+                    }
+                    triValeurSequences.add(valeurSequenceCoeur);
                 }
                 if (tailleSequenceCarreau == tailleSequence) {
-                    triValeurSequences.add(valeurPointCarreau);
+                    int valeurSequenceCarreau = 0;
+                    for(int i = 0; i<cartesTrefle.size(); i++){
+                        int valeurTemporaire = 0;
+                        for(int j = 0; j<tailleSequence; j++){
+                            if(cartesTrefle.get(i + j + 1).getPointCarte() == cartesTrefle.get(i + j).getPointCarte() + 1){
+                                valeurTemporaire += cartesTrefle.get(i).getPointCarte();
+                                if(valeurTemporaire > valeurSequenceCarreau){
+                                    valeurSequenceCarreau = valeurTemporaire;
+                                }
+                            }
+                            else{
+                                valeurTemporaire = 0;
+                            }
+                        }   
+                    }
+                    triValeurSequences.add(valeurSequenceCarreau);
                 }
+                //On trie la liste triValeurSequences pour obtenir la séquence possédant la plus grande valeur.
                 Collections.sort(triValeurSequences);  
-                tailleSequence = triValeurSequences.get(triValeurSequences.size()-1);
+                valeurSequence = triValeurSequences.get(triValeurSequences.size()-1);
             }
             
             /*
@@ -309,6 +370,12 @@ public class Joueur {
                 else if (cartesCarreau.size() == nbCartePoint){
                     tailleSequence = tailleSequenceCarreau;
                 }
+            }
+            
+            //Tant que le joueur n'a pas proposé le bon nombre de cartes de sa main qui se suivent et de même couleur, on lui repose la question.
+            while (propositionSequence != tailleSequence){
+                System.out.println("La taille de la séquence renseignée est incorrecte. Veuillez recompter puis saisir la bonne taille de votre séquence.");
+                propositionSequence = sc.nextInt();
             }
         }
     }
@@ -344,6 +411,14 @@ public class Joueur {
 
     public int getNbCartePoint() {
         return nbCartePoint;
+    }
+
+    public int getTailleSequence() {
+        return tailleSequence;
+    }
+
+    public int getValeurSequence() {
+        return valeurSequence;
     }
 
     

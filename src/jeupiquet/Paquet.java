@@ -8,9 +8,8 @@ package jeupiquet;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- *
- * @author abour
+/*
+Fichier dans lequel un jeu de carte est créé en chaque début de partie.
  */
 
 /*
@@ -26,6 +25,7 @@ public class Paquet {
         creerPaquet();
     }
     
+    //creerPaquet() permet d'ajouter à la liste qui servira de paquet, toutes les cartes nécessaire au jeu.
     public void creerPaquet() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 4; j++) {
@@ -37,7 +37,7 @@ public class Paquet {
             }
         }
     }
-    
+    //melangerPaquet() permet de mélanger la liste aléatoirement.
     public void melangerPaquet(){
         Collections.shuffle(_listeCartes);
     }
