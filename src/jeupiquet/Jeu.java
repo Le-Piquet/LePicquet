@@ -96,6 +96,8 @@ public class Jeu {
         int nbreManche = 0;
         Joueur gagnant = _joueur1;
         Joueur perdant = _joueur2;
+        int SJ1AvantLv = _joueur1.getScore();
+        int SJ2AvantLv = _joueur2.getScore();
 
         while (!_joueur1.getMain().isEmpty()) {
             nbreManche = nbreManche + 1;
@@ -110,11 +112,11 @@ public class Jeu {
             if (gagnant.prendreCarte(refCarteJ1).getCouleur() == perdant.prendreCarte(refCarteJ2).getCouleur()) {
                 if (gagnant.prendreCarte(refCarteJ1).getPointCarte() < perdant.prendreCarte(refCarteJ2).getPointCarte()) {
                     if (nbreManche == 12) { // au pli 12, des les scores peuvent changés en raison d'une égalité ou une victoire totale 
-                        if (_joueur2.getScore() == 5) { // si les deux joueurs son a 6-6, les scores repartent a 0.
-                            _joueur2.setScore(0);
-                            _joueur1.setScore(0);
-                        } else if (_joueur2.getScore() == 11) {
-                            _joueur2.setScore(40); // si le joueur gagne les 12 plis sont scores passent a 40 . 
+                        if (_joueur2.getScore() == SJ2AvantLv + 5) { // si les deux joueurs son a 6-6, les scores repartent a 0.
+                            _joueur2.setScore(SJ2AvantLv);
+                            _joueur1.setScore(SJ1AvantLv);
+                        } else if (_joueur2.getScore() == SJ2AvantLv + 11) {
+                            _joueur2.setScore(SJ1AvantLv + 40); // si le joueur gagne les 12 plis sont scores passent a 40 .
                         } else {
                             _joueur2.setScore(_joueur2.getScore() + 1);
                         }
@@ -129,11 +131,11 @@ public class Jeu {
                     perdant = _joueur1;
                 } else if (gagnant.prendreCarte(refCarteJ1).getPointCarte() > perdant.prendreCarte(refCarteJ2).getPointCarte()) {
                     if (nbreManche == 12) {
-                        if (_joueur1.getScore() == 5) {
-                            _joueur2.setScore(0);
-                            _joueur1.setScore(0);
-                        } else if (_joueur1.getScore() == 11) {
-                            _joueur1.setScore(40);
+                        if (_joueur1.getScore() == SJ1AvantLv + 5) {
+                            _joueur2.setScore(SJ2AvantLv);
+                            _joueur1.setScore(SJ1AvantLv);
+                        } else if (_joueur1.getScore() == SJ1AvantLv + 11) {
+                            _joueur1.setScore(SJ1AvantLv + 40);
                         } else {
                             _joueur1.setScore(_joueur1.getScore() + 1);
                         }
