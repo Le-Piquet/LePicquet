@@ -74,11 +74,11 @@ public class Jeu {
     public void calculerScorePoint(){
         if (getJoueur1().getNbCartePoint() > getJoueur2().getNbCartePoint()){
             getJoueur1().setScore(getJoueur1().getScore() + getJoueur1().getNbCartePoint());
-            System.out.println(_joueur1.getPseudo() + " gagne la manche des Points.");
+            System.out.println(_joueur1.getPseudo() + " gagne la manche des Points et remporte " + getJoueur1().getNbCartePoint() + " points.");
         }
         else if (getJoueur1().getNbCartePoint() < getJoueur2().getNbCartePoint()){
             getJoueur2().setScore(getJoueur2().getScore() + getJoueur2().getNbCartePoint());
-            System.out.println(_joueur2.getPseudo() + " gagne la manche des Points.");
+            System.out.println(_joueur2.getPseudo() + " gagne la manche des Points et remporte " + getJoueur2().getNbCartePoint() + " points.");
         }
         else if (getJoueur1().getNbCartePoint() == getJoueur2().getNbCartePoint()){
             if (getJoueur1().getValeurPoint() > getJoueur2().getValeurPoint()){
