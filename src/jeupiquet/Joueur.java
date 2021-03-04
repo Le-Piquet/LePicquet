@@ -21,6 +21,9 @@ public class Joueur {
     private int valeurPoint = 0;        //La valeur du point permettant de comparer deux points avec le même nombre de cartes
     private int nbCartePoint = 0;           //Le nombre de cartes du plus grand point du joueur
     private int tailleSequence = 0;         //Le nombre de cartes de la plus grande suite de la meme couleur 
+    private int ValeurCBC = 0;
+    
+    
     
     public Joueur(String pseudo, int score) {
         this.pseudo = pseudo;
@@ -152,6 +155,7 @@ public class Joueur {
         
     }
     
+    @SuppressWarnings({"empty-statement", "empty-statement", "empty-statement"})
     public void demandeSequence(Joueur joueur){
         Scanner sc = new Scanner(System.in);
         System.out.println(joueur.getPseudo() + ", avez vous une séquence ?");
@@ -313,49 +317,154 @@ public class Joueur {
         }
     }
     
-    public void demandeSequence(Joueur joueur) {
+    public void demandeBrelan(Joueur joueur) {
         Scanner sc = new Scanner(System.in);
-        System.out.println(joueur.getPseudo() + ", avez vous un brelan ?");
+        System.out.println(joueur.getPseudo() + ", avez vous un brelan, qui ne comporte pas de 7, 8, 9 ?");
         if (sc.nextLine().compareTo("oui") == 0) {
-            System.out.println("Quelle est la valeur de la carte de votre brelan ?");
+            System.out.println("Quelle est la valeur de la carte de votre brelan (10, Valet=11, Dame=12, Roi=13, As=14)?");
             int propositionBrelan = sc.nextInt();            //proposition du joueur concernant la longueur de son plus grand point
-            ArrayList<Carte> cartesValeurs7 = new ArrayList();            //Liste des cartes de couleur trèfle dans la main du joueur
-            ArrayList<Carte> cartesValeurs8 = new ArrayList();
-            ArrayList<Carte> cartesValeurs9 = new ArrayList();
-            ArrayList<Carte> cartesValeurs10 = new ArrayList();
-            ArrayList<Carte> cartesValeursJ = new ArrayList();
-            ArrayList<Carte> cartesValeursD = new ArrayList();
-            ArrayList<Carte> cartesValeursR = new ArrayList();
-            ArrayList<Carte> cartesValeursA = new ArrayList();
-            int valeurBrelan7 = 0;              //Valeur du point de couleur trèfle du joueur
-            int valeurBrelan8 = 0;
-            int valeurBrelan9 = 0;
-            int valeurBrelan10 = 0;
-            int valeurBrelanJ = 0;              //Valeur du point de couleur trèfle du joueur
-            int valeurBrelanD = 0;
-            int valeurBrelanR = 0;
-            int valeurBrelanA = 0;
 
-            for (int i = 0; i < joueur.getMain().size(); i++) {
-                if (joueur.getMain().get(i).getPointCarte().compareTo("7") == 0) {
-                    cartesValeurs7.add(joueur.getMain().get(i));
-                    valeursCTrefle.add(joueur.getMain().get(i).getPointCarte());
-                } else if (joueur.getMain().get(i).getCouleur().compareTo("pique") == 0) {
-                    cartesPique.add(joueur.getMain().get(i));
-                    valeurPointPique += joueur.getMain().get(i).getPointCarte();
-                } else if (joueur.getMain().get(i).getCouleur().compareTo("coeur") == 0) {
-                    cartesCoeur.add(joueur.getMain().get(i));
-                    valeursCCoeur.add(joueur.getMain().get(i).getPointCarte());
-                } else if (joueur.getMain().get(i).getCouleur().compareTo("carreau") == 0) {
-                    cartesCarreau.add(joueur.getMain().get(i));
-                    valeursCCarreau.add(joueur.getMain().get(i).getPointCarte());
+//            ArrayList<Carte> cartesValeurs10 = new ArrayList();
+//            ArrayList<Carte> cartesValeursJ = new ArrayList();
+//            ArrayList<Carte> cartesValeursD = new ArrayList();
+//            ArrayList<Carte> cartesValeursR = new ArrayList();
+ //           ArrayList<Carte> cartesValeursA = new ArrayList();
+
+
+            int frequence10 = Collections.frequency(joueur.main, "10");
+            int frequenceJ = Collections.frequency(joueur.main, "Valet");
+            int frequenceD = Collections.frequency(joueur.main, "Dame");
+            int frequenceR = Collections.frequency(joueur.main, "Roi");
+            int frequenceA = Collections.frequency(joueur.main, "As");
+
+            switch (propositionBrelan)  {
+        
+                case 10: {
+                    if (frequence10 == 3) {
+                        joueur.setValeurCBC(1);  
+                        System.out.println(joueur.getPseudo() + ", vous avez un brelan de 10.");
+                    }
+                    else {
+                        System.out.println(joueur.getPseudo() + ", vous vous n'avez pas de brelan, vous ne gagnez pas de points.");
+                    }
                 }
+                
+                case 11:{
+                    if (frequenceJ == 3) {
+                        joueur.setValeurCBC(2);  
+                        System.out.println(joueur.getPseudo() + ", vous avez un brelan de Valets.");
+                    }
+                    else {
+                        System.out.println(joueur.getPseudo() + ", vous vous n'avez pas de brelan, vous ne gagnez pas de points.");
+                    }
+                }
+                case 12 :{
+                    if (frequenceD == 3) {
+                        joueur.setValeurCBC(3);  
+                        System.out.println(joueur.getPseudo() + ", vous avez un brelan de Dames.");
+                    }
+                    else {
+                        System.out.println(joueur.getPseudo() + ", vous vous n'avez pas de brelan, vous ne gagnez pas de points.");
+                    }
+                }
+                case 13 :{
+                    if (frequenceR == 3) {
+                        joueur.setValeurCBC(4);  
+                        System.out.println(joueur.getPseudo() + ", avez un brelan de Rois.");
+                    }
+                    else {
+                        System.out.println(joueur.getPseudo() + ", vous vous n'avez pas de brelan, vous ne gagnez pas de points.");
+                    }
+                }
+                case 14 :{
+                    if (3 == frequenceA) {
+                        joueur.setValeurCBC(5);  
+                        System.out.println(joueur.getPseudo() + ", avez un brelan d'As.");
+                    }
+                    else {
+                        System.out.println(joueur.getPseudo() + ", vous vous n'avez pas de brelan, vous ne gagnez pas de points.");
+                    }
+                }
+            
             }
+            
 
-        }
-    }
+        }}
     
     
+    public void demandeCarre(Joueur joueur) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println(joueur.getPseudo() + ", avez vous un carré, qui ne comporte pas de 7, 8, 9 ?");
+        if (sc.nextLine().compareTo("oui") == 0) {
+            System.out.println("Quelle est la valeur de la carte de votre carré (10, Valet=11, Dame=12, Roi=13, As=14)?");
+            int propositionBrelan = sc.nextInt();            //proposition du joueur concernant la longueur de son plus grand point
+
+//            ArrayList<Carte> cartesValeurs10 = new ArrayList();
+//            ArrayList<Carte> cartesValeursJ = new ArrayList();
+//            ArrayList<Carte> cartesValeursD = new ArrayList();
+//            ArrayList<Carte> cartesValeursR = new ArrayList();
+ //           ArrayList<Carte> cartesValeursA = new ArrayList();
+
+
+            int frequence10 = Collections.frequency(joueur.main, "10");
+            int frequenceJ = Collections.frequency(joueur.main, "Valet");
+            int frequenceD = Collections.frequency(joueur.main, "Dame");
+            int frequenceR = Collections.frequency(joueur.main, "Roi");
+            int frequenceA = Collections.frequency(joueur.main, "As");
+
+            switch (propositionBrelan)  {
+        
+                case 10: {
+                    if (frequence10 == 4) {
+                        joueur.setValeurCBC(6);  
+                        System.out.println(joueur.getPseudo() + ", vous gagnez 14 points ");
+                    }
+                    else {
+                        System.out.println(joueur.getPseudo() + ", vous vous n'avez pas de carré, vous ne gagnez pas de points.");
+                    }
+                }
+                
+                case 11:{
+                    if (frequenceJ == 4) {
+                        joueur.setValeurCBC(7);
+                        System.out.println(joueur.getPseudo() + ", vous gagnez 14 points ");
+                    }
+                    else {
+                        System.out.println(joueur.getPseudo() + ", vous vous n'avez pas de carré, vous ne gagnez pas de points.");
+                    }
+                }
+                case 12 :{
+                    if (frequenceD == 4) {
+                        joueur.setValeurCBC(8);
+                        System.out.println(joueur.getPseudo() + ", vous gagnez 14 points ");
+                    }
+                    else {
+                        System.out.println(joueur.getPseudo() + ", vous vous n'avez pas de carré, vous ne gagnez pas de points.");
+                    }
+                }
+                case 13 :{
+                    if (frequenceR == 4) {
+                        joueur.setValeurCBC(9);  
+                        System.out.println(joueur.getPseudo() + ", vous gagnez 14 points ");
+                    }
+                    else {
+                        System.out.println(joueur.getPseudo() + ", vous vous n'avez pas de carré, vous ne gagnez pas de points.");
+                    }
+                }
+                case 14 :{
+                    if (4 == frequenceA) {
+                        joueur.setValeurCBC(10);
+                        System.out.println(joueur.getPseudo() + ", vous gagnez 14 points ");
+                    }
+                    else {
+                        System.out.println(joueur.getPseudo() + ", vous vous n'avez pas de carré, vous ne gagnez pas de points.");
+                    }
+                }
+            
+            }
+            
+
+        }}
 
     public ArrayList<Carte> getMain() {
         return main;
@@ -380,6 +489,18 @@ public class Joueur {
     public int getNbCartePoint() {
         return nbCartePoint;
     }
+
+    public int getValeurCBC() {
+        return ValeurCBC;
+    }
+
+  
+
+    public void setValeurCBC(int ValeurCBC) {
+        this.ValeurCBC = ValeurCBC;
+    }
+
+
 
     
 

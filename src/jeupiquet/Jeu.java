@@ -89,6 +89,32 @@ public class Jeu {
             }
         }
     }
+    public void calculerScoreBrelanCarre() {
+        Scanner sc = new Scanner(System.in);
+        if (_joueur1.getValeurCBC()>_joueur2.getValeurCBC()) {
+            if (_joueur1.getValeurCBC() > 5) {
+                _joueur1.setScore(_joueur1.getScore() + 14);
+                System.out.println( _joueur1.getPseudo() + ", vous gagnez 14 points grace a votre carré" );
+            }
+            else if (_joueur1.getValeurCBC() < 6) {
+                _joueur1.setScore(_joueur1.getScore() + 3);
+                System.out.println( _joueur1.getPseudo() + ", vous gagnez 3 points grace a votre brelan" );
+            }
+        }
+        else if (_joueur1.getValeurCBC()<_joueur2.getValeurCBC()) {
+            if (_joueur2.getValeurCBC() > 5) {
+                _joueur2.setScore(_joueur2.getScore() + 14);
+                System.out.println( _joueur2.getPseudo() + ", vous gagnez 14 points grace a votre carré" );
+            }
+            else if (_joueur2.getValeurCBC() < 6) {
+                _joueur2.setScore(_joueur2.getScore() + 3);
+                System.out.println( _joueur2.getPseudo() + ", vous gagnez 3 points grace a votre brelan" );
+            }
+        }
+        else {
+            System.out.println( "Aucun des joueurs n'a de brelans ni de carrés." );
+        }
+    }
 
     public void levees() {
         Scanner sc = new Scanner(System.in);
