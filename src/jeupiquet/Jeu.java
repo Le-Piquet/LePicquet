@@ -141,38 +141,76 @@ public class Jeu {
     public void levees() {
         Scanner sc = new Scanner(System.in);
         int refCarteJ1, refCarteJ2;
-
+        int nbreManche = 0;
         Joueur gagnant = _joueur1;
         Joueur perdant = _joueur2;
-        
+
         while (!_joueur1.getMain().isEmpty()) {
+            nbreManche = nbreManche + 1;
             //Mettre cette partie dans la methode prendre carte qu'une seule fois. Plus propre.
-            System.out.println(gagnant.getPseudo() + ", quelle carte de votre main voullez vous donnez ?"); 
+            System.out.println(gagnant.getPseudo() + ", quelle carte de votre main voullez vous donnez ?");
             refCarteJ1 = sc.nextInt();
             System.out.println("La carte posé par " + gagnant.getPseudo() + " est " + gagnant.prendreCarte(refCarteJ1));
             System.out.println(perdant.getPseudo() + ", quelle carte de votre main voullez vous donnez ?");
             refCarteJ2 = sc.nextInt();
             System.out.println("La carte posé par " + perdant.getPseudo() + " est " + perdant.prendreCarte(refCarteJ2));
 
-            if (gagnant.prendreCarte(refCarteJ1).getCouleur() == perdant.prendreCarte(refCarteJ2).getCouleur()){
+            if (gagnant.prendreCarte(refCarteJ1).getCouleur() == perdant.prendreCarte(refCarteJ2).getCouleur()) {
                 if (gagnant.prendreCarte(refCarteJ1).getPointCarte() < perdant.prendreCarte(refCarteJ2).getPointCarte()) {
-                    perdant.setScore(_joueur2.getScore() + 1);
-                    System.out.println(perdant.getPseudo() + " remporte le pli, il commence. ");
+                    if (nbreManche == 12) { // au pli 12, des les scores peuvent changés en raison d'une égalité ou une victoire totale 
+                        if (_joueur2.getScore() == 5) { // si les deux joueurs son a 6-6, les scores repartent a 0.
+                            _joueur2.setScore(0);
+                            _joueur1.setScore(0);
+                        } else if (_joueur2.getScore() == 11) {
+                            _joueur2.setScore(40); // si le joueur gagne les 12 plis sont scores passent a 40 . 
+                        } else {
+                            _joueur2.setScore(_joueur2.getScore() + 1);
+                        }
+
+                    } else if (nbreManche != 12) {//perdant.setScore(_joueur2.getScore() + 1);
+                        _joueur2.setScore(_joueur2.getScore() + 1);
+                    }
+                    {
+                        System.out.println(perdant.getPseudo() + " remporte le pli, il commence. ");
+                    }
                     gagnant = _joueur2;
                     perdant = _joueur1;
-                }
+                } else if (gagnant.prendreCarte(refCarteJ1).getPointCarte() > perdant.prendreCarte(refCarteJ2).getPointCarte()) {
+                    if (nbreManche == 12) {
+                        if (_joueur1.getScore() == 5) {
+                            _joueur2.setScore(0);
+                            _joueur1.setScore(0);
+                        } else if (_joueur1.getScore() == 11) {
+                            _joueur1.setScore(40);
+                        } else {
+                            _joueur1.setScore(_joueur1.getScore() + 1);
+                        }
 
-                else if (gagnant.prendreCarte(refCarteJ1).getPointCarte() > perdant.prendreCarte(refCarteJ2).getPointCarte()) {
-                    gagnant.setScore(_joueur1.getScore() + 1);
-                    System.out.println(gagnant.getPseudo() + " remporte le pli, il commence. ");
+                    } else if (nbreManche != 12) {//perdant.setScore(_joueur2.getScore() + 1);
+                        _joueur2.setScore(_joueur2.getScore() + 1);
+                    }
+                    //gagnant.setScore(_joueur1.getScore() + 1);
+                    System.out.println(gagnant.getPseudo() + " remporte le pli, il commence ");
                     gagnant = _joueur1;
                     perdant = _joueur2;
                 }
-            }
-            else{
-                gagnant.setScore(gagnant.getScore() + 1);
+            } else {
+                if (nbreManche == 12) {
+                    if (gagnant.getScore() == 5) {
+                        _joueur2.setScore(0);
+                        _joueur1.setScore(0);
+                    } else if (gagnant.getScore() == 11) {
+                        gagnant.setScore(40);
+                    } else {
+                        gagnant.setScore(gagnant.getScore() + 1);
+                    }
+
+                } else if (nbreManche != 12) {//perdant.setScore(_joueur2.getScore() + 1);
+                    gagnant.setScore(gagnant.getScore() + 1);
+                }
+                //gagnant.setScore(gagnant.getScore() + 1);
                 System.out.println(gagnant.getPseudo() + " remporte le pli, il commence. ");
-                
+
             }
         }
     }

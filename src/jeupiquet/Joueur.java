@@ -380,12 +380,47 @@ public class Joueur {
         }
     }
     
-    
-    
-    
-    
-    
-    
+    public void demandeCarré(Joueur joueur) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println(joueur.getPseudo() + ", avez vous un brelan ?");
+        if (sc.nextLine().compareTo("oui") == 0) {
+            System.out.println("Quelle est la valeur de la carte de votre brelan ?");
+            int propositionBrelan = sc.nextInt();            //proposition du joueur concernant la longueur de son plus grand point
+            ArrayList<Carte> cartesValeurs7 = new ArrayList();            //Liste des cartes de couleur trèfle dans la main du joueur
+            ArrayList<Carte> cartesValeurs8 = new ArrayList();
+            ArrayList<Carte> cartesValeurs9 = new ArrayList();
+            ArrayList<Carte> cartesValeurs10 = new ArrayList();
+            ArrayList<Carte> cartesValeursJ = new ArrayList();
+            ArrayList<Carte> cartesValeursD = new ArrayList();
+            ArrayList<Carte> cartesValeursR = new ArrayList();
+            ArrayList<Carte> cartesValeursA = new ArrayList();
+            int valeurBrelan7 = 0;              //Valeur du point de couleur trèfle du joueur
+            int valeurBrelan8 = 0;
+            int valeurBrelan9 = 0;
+            int valeurBrelan10 = 0;
+            int valeurBrelanJ = 0;              //Valeur du point de couleur trèfle du joueur
+            int valeurBrelanD = 0;
+            int valeurBrelanR = 0;
+            int valeurBrelanA = 0;
+
+            for (int i = 0; i < joueur.getMain().size(); i++) {
+                if (joueur.getMain().get(i).getPointCarte().compareTo("7") == 0) {
+                    cartesValeurs7.add(joueur.getMain().get(i));
+                    valeursCTrefle.add(joueur.getMain().get(i).getPointCarte());
+                } else if (joueur.getMain().get(i).getCouleur().compareTo("pique") == 0) {
+                    cartesPique.add(joueur.getMain().get(i));
+                    valeurPointPique += joueur.getMain().get(i).getPointCarte();
+                } else if (joueur.getMain().get(i).getCouleur().compareTo("coeur") == 0) {
+                    cartesCoeur.add(joueur.getMain().get(i));
+                    valeursCCoeur.add(joueur.getMain().get(i).getPointCarte());
+                } else if (joueur.getMain().get(i).getCouleur().compareTo("carreau") == 0) {
+                    cartesCarreau.add(joueur.getMain().get(i));
+                    valeursCCarreau.add(joueur.getMain().get(i).getPointCarte());
+                }
+            }
+
+        }
+    }
     
     
 
