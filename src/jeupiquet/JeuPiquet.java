@@ -74,16 +74,22 @@ public class JeuPiquet {
         }
     
         //On demande au joueurs le plus grand point qu'ils possèdent.
-        jeu.getJoueur1().demandePoint(jeu.getJoueur1());
-        jeu.getJoueur2().demandePoint(jeu.getJoueur2());
+        jeu.getJoueur1().demandePoint();
+        jeu.getJoueur2().demandePoint();
         //On incrémente les scores des joueurs en fonction de celui qui a le meilleur point.
         jeu.calculerScorePoint();
         
         //On demande au joueurs la plus grande séquence qu'ils possèdent.
-        jeu.getJoueur1().demandeSequence(jeu.getJoueur1());
-        jeu.getJoueur2().demandeSequence(jeu.getJoueur2());
+        jeu.getJoueur1().demandeSequence();
+        jeu.getJoueur2().demandeSequence();
         //On incrémente les scores des joueurs en fonction de celui qui a la meilleure séquence.
         jeu.calculerScoreSequence();
+        
+        jeu.getJoueur1().demandeBrelan();
+        jeu.getJoueur2().demandeBrelan();
+        
+        jeu.getJoueur1().demandeCarre();
+        jeu.getJoueur2().demandeCarre();
         
         jeu.levees();
         

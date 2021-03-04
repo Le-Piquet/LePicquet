@@ -20,7 +20,10 @@ public class Joueur {
     private int valeurPoint = 0;        //La valeur du point permettant de comparer deux points avec le même nombre de cartes
     private int nbCartePoint = 0;           //Le nombre de cartes du plus grand point du joueur
     private int tailleSequence = 0;         //Le nombre de cartes de la plus grande suite de la meme couleur 
-    private int valeurSequence = 0;             //La valeur de la séquence permettant de comparer deux séquences avec le même nombre de cartes
+    private int valeurSequence = 0;         //La valeur de la séquence 
+    private int valeurBrelan = 0;
+    private int valeurCarre = 0;
+    
     
     public Joueur(String pseudo, int score) {
         this.pseudo = pseudo;
@@ -56,9 +59,9 @@ public class Joueur {
     /*
     demandePoint() permet de vérifier si les informations fournis par le joueur concernant son point sont correctes ou non. De plus, on y détermine la valeur du point.
     */
-    public void demandePoint(Joueur joueur){
+    public void demandePoint(){
         Scanner sc = new Scanner(System.in);
-        System.out.println(joueur.getPseudo() + " avez vous un point ?");
+        System.out.println(pseudo + " avez vous un point ?");
         if (sc.nextLine().compareTo("oui") == 0){
             System.out.println("Quelle est la taille de votre point ?");
             int propositionPoint = sc.nextInt();            //proposition du joueur concernant la longueur de son plus grand point
@@ -72,22 +75,22 @@ public class Joueur {
             int valeurPointCarreau = 0;
             
             //On trie les cartes par couleurs. On compte également les valeurs des points des différentes couleurs.
-            for (int i = 0; i< joueur.getMain().size(); i++){
-                if (joueur.getMain().get(i).getCouleur().compareTo("trefle") == 0){
-                    cartesTrefle.add(joueur.getMain().get(i));
-                    valeurPointTrefle += joueur.getMain().get(i).getPointCarte();
+            for (int i = 0; i< main.size(); i++){
+                if (main.get(i).getCouleur().compareTo("trefle") == 0){
+                    cartesTrefle.add(main.get(i));
+                    valeurPointTrefle += main.get(i).getPointCarte();
                 }
-                else if (joueur.getMain().get(i).getCouleur().compareTo("pique") == 0){
-                    cartesPique.add(joueur.getMain().get(i));
-                    valeurPointPique += joueur.getMain().get(i).getPointCarte();
+                else if (main.get(i).getCouleur().compareTo("pique") == 0){
+                    cartesPique.add(main.get(i));
+                    valeurPointPique += main.get(i).getPointCarte();
                 }
-                else if (joueur.getMain().get(i).getCouleur().compareTo("coeur") == 0){
-                    cartesCoeur.add(joueur.getMain().get(i));
-                    valeurPointCoeur += joueur.getMain().get(i).getPointCarte();
+                else if (main.get(i).getCouleur().compareTo("coeur") == 0){
+                    cartesCoeur.add(main.get(i));
+                    valeurPointCoeur += main.get(i).getPointCarte();
                 }
-                else if (joueur.getMain().get(i).getCouleur().compareTo("carreau") == 0){
-                    cartesCarreau.add(joueur.getMain().get(i));
-                    valeurPointCarreau += joueur.getMain().get(i).getPointCarte();
+                else if (main.get(i).getCouleur().compareTo("carreau") == 0){
+                    cartesCarreau.add(main.get(i));
+                    valeurPointCarreau += main.get(i).getPointCarte();
                 }
             }
             
@@ -155,9 +158,9 @@ public class Joueur {
     /*
     demandeSequence() permet de vérifier si les informations fournis par le joueur concernant sa séquence sont correctes ou non. De plus, on y détermine la valeur de la séquence.
     */
-    public void demandeSequence(Joueur joueur){
+    public void demandeSequence(){
         Scanner sc = new Scanner(System.in);
-        System.out.println(joueur.getPseudo() + ", avez vous une séquence ?");
+        System.out.println(pseudo + ", avez vous une séquence ?");
         if (sc.nextLine().compareTo("oui") == 0){
             System.out.println("Quelle est la taille de votre séquence ?");
             int propositionSequence = sc.nextInt();            //proposition du joueur concernant la longueur de sa plus grande séquence
@@ -171,22 +174,22 @@ public class Joueur {
             ArrayList<Integer> valeursCCarreau = new ArrayList();
             
             //On trie les cartes de la main du joueur par couleurs. 
-            for (int i = 0; i< joueur.getMain().size(); i++){
-                if (joueur.getMain().get(i).getCouleur().compareTo("trefle") == 0){
-                    cartesTrefle.add(joueur.getMain().get(i));
-                    valeursCTrefle.add(joueur.getMain().get(i).getPointCarte());
+            for (int i = 0; i < main.size(); i++){
+                if (main.get(i).getCouleur().compareTo("trefle") == 0){
+                    cartesTrefle.add(main.get(i));
+                    valeursCTrefle.add(main.get(i).getPointCarte());
                 }
-                else if (joueur.getMain().get(i).getCouleur().compareTo("pique") == 0){
-                    cartesPique.add(joueur.getMain().get(i));
-                    valeursCPique.add(joueur.getMain().get(i).getPointCarte());
+                else if (main.get(i).getCouleur().compareTo("pique") == 0){
+                    cartesPique.add(main.get(i));
+                    valeursCPique.add(main.get(i).getPointCarte());
                 }
-                else if (joueur.getMain().get(i).getCouleur().compareTo("coeur") == 0){
-                    cartesCoeur.add(joueur.getMain().get(i));
-                    valeursCCoeur.add(joueur.getMain().get(i).getPointCarte());
+                else if (main.get(i).getCouleur().compareTo("coeur") == 0){
+                    cartesCoeur.add(main.get(i));
+                    valeursCCoeur.add(main.get(i).getPointCarte());
                 }
-                else if (joueur.getMain().get(i).getCouleur().compareTo("carreau") == 0){
-                    cartesCarreau.add(joueur.getMain().get(i));
-                    valeursCCarreau.add(joueur.getMain().get(i).getPointCarte());
+                else if (main.get(i).getCouleur().compareTo("carreau") == 0){
+                    cartesCarreau.add(main.get(i));
+                    valeursCCarreau.add(main.get(i).getPointCarte());
                 }
             }
             
@@ -297,11 +300,11 @@ public class Joueur {
                 }
                 if (tailleSequencePique == tailleSequence) {
                     int valeurSequencePique = 0;
-                    for(int i = 0; i<cartesTrefle.size(); i++){
+                    for(int i = 0; i<cartesPique.size(); i++){
                         int valeurTemporaire = 0;
                         for(int j = 0; j<tailleSequence; j++){
-                            if(cartesTrefle.get(i + j + 1).getPointCarte() == cartesTrefle.get(i + j).getPointCarte() + 1){
-                                valeurTemporaire += cartesTrefle.get(i).getPointCarte();
+                            if(cartesPique.get(i + j + 1).getPointCarte() == cartesPique.get(i + j).getPointCarte() + 1){
+                                valeurTemporaire += cartesPique.get(i).getPointCarte();
                                 if(valeurTemporaire > valeurSequencePique){
                                     valeurSequencePique = valeurTemporaire;
                                 }
@@ -315,11 +318,11 @@ public class Joueur {
                 }
                 if (tailleSequenceCoeur == tailleSequence) {
                     int valeurSequenceCoeur = 0;
-                    for(int i = 0; i<cartesTrefle.size(); i++){
+                    for(int i = 0; i<cartesCoeur.size(); i++){
                         int valeurTemporaire = 0;
                         for(int j = 0; j<tailleSequence; j++){
-                            if(cartesTrefle.get(i + j + 1).getPointCarte() == cartesTrefle.get(i + j).getPointCarte() + 1){
-                                valeurTemporaire += cartesTrefle.get(i).getPointCarte();
+                            if(cartesCoeur.get(i + j + 1).getPointCarte() == cartesCoeur.get(i + j).getPointCarte() + 1){
+                                valeurTemporaire += cartesCoeur.get(i).getPointCarte();
                                 if(valeurTemporaire > valeurSequenceCoeur){
                                     valeurSequenceCoeur = valeurTemporaire;
                                 }
@@ -333,11 +336,11 @@ public class Joueur {
                 }
                 if (tailleSequenceCarreau == tailleSequence) {
                     int valeurSequenceCarreau = 0;
-                    for(int i = 0; i<cartesTrefle.size(); i++){
+                    for(int i = 0; i<cartesCarreau.size(); i++){
                         int valeurTemporaire = 0;
                         for(int j = 0; j<tailleSequence; j++){
-                            if(cartesTrefle.get(i + j + 1).getPointCarte() == cartesTrefle.get(i + j).getPointCarte() + 1){
-                                valeurTemporaire += cartesTrefle.get(i).getPointCarte();
+                            if(cartesCarreau.get(i + j + 1).getPointCarte() == cartesCarreau.get(i + j).getPointCarte() + 1){
+                                valeurTemporaire += cartesCarreau.get(i).getPointCarte();
                                 if(valeurTemporaire > valeurSequenceCarreau){
                                     valeurSequenceCarreau = valeurTemporaire;
                                 }
@@ -380,49 +383,78 @@ public class Joueur {
         }
     }
     
-    public void demandeCarré(Joueur joueur) {
+    public void demandeBrelan() {
         Scanner sc = new Scanner(System.in);
-        System.out.println(joueur.getPseudo() + ", avez vous un brelan ?");
+        System.out.println(pseudo + ", avez vous un brelan de cartes supérieures à 9 ?");
         if (sc.nextLine().compareTo("oui") == 0) {
-            System.out.println("Quelle est la valeur de la carte de votre brelan ?");
-            int propositionBrelan = sc.nextInt();            //proposition du joueur concernant la longueur de son plus grand point
-            ArrayList<Carte> cartesValeurs7 = new ArrayList();            //Liste des cartes de couleur trèfle dans la main du joueur
-            ArrayList<Carte> cartesValeurs8 = new ArrayList();
-            ArrayList<Carte> cartesValeurs9 = new ArrayList();
-            ArrayList<Carte> cartesValeurs10 = new ArrayList();
-            ArrayList<Carte> cartesValeursJ = new ArrayList();
-            ArrayList<Carte> cartesValeursD = new ArrayList();
-            ArrayList<Carte> cartesValeursR = new ArrayList();
-            ArrayList<Carte> cartesValeursA = new ArrayList();
-            int valeurBrelan7 = 0;              //Valeur du point de couleur trèfle du joueur
-            int valeurBrelan8 = 0;
-            int valeurBrelan9 = 0;
-            int valeurBrelan10 = 0;
-            int valeurBrelanJ = 0;              //Valeur du point de couleur trèfle du joueur
-            int valeurBrelanD = 0;
-            int valeurBrelanR = 0;
-            int valeurBrelanA = 0;
+            System.out.println("Quelle est la valeur de la carte de votre brelan (10, Valet, Dame, Roi, As)?");
+            int propositionBrelan = sc.nextInt();            //proposition du joueur concernant la longueur de son plus grand brelan
 
-            for (int i = 0; i < joueur.getMain().size(); i++) {
-                if (joueur.getMain().get(i).getPointCarte().compareTo("7") == 0) {
-                    cartesValeurs7.add(joueur.getMain().get(i));
-                    valeursCTrefle.add(joueur.getMain().get(i).getPointCarte());
-                } else if (joueur.getMain().get(i).getCouleur().compareTo("pique") == 0) {
-                    cartesPique.add(joueur.getMain().get(i));
-                    valeurPointPique += joueur.getMain().get(i).getPointCarte();
-                } else if (joueur.getMain().get(i).getCouleur().compareTo("coeur") == 0) {
-                    cartesCoeur.add(joueur.getMain().get(i));
-                    valeursCCoeur.add(joueur.getMain().get(i).getPointCarte());
-                } else if (joueur.getMain().get(i).getCouleur().compareTo("carreau") == 0) {
-                    cartesCarreau.add(joueur.getMain().get(i));
-                    valeursCCarreau.add(joueur.getMain().get(i).getPointCarte());
+            ArrayList listeValeurCartes = new ArrayList();
+            for (int i = 0; i< main.size(); i++){
+                if (main.get(i).getPointCarte() > 9){
+                    listeValeurCartes.add(main.get(i).getPointCarte());
                 }
             }
-
+            Collections.sort(listeValeurCartes);
+            
+            int valeurTemporaire = 0;
+            
+            for (int i = 0; i<listeValeurCartes.size() - 2; i++){
+                if ((listeValeurCartes.get(i) == listeValeurCartes.get(i+1)) && (listeValeurCartes.get(i) == listeValeurCartes.get(i+2))){
+                    valeurTemporaire = (int) listeValeurCartes.get(i);
+                    if(valeurTemporaire >= valeurBrelan){
+                        valeurBrelan = valeurTemporaire;
+                    }
+                }
+            }
+            
+            //Tant que le joueur n'a pas proposé le bon nombre de cartes de sa main qui ont la même valeur, on lui repose la question.
+            while (propositionBrelan != valeurBrelan){
+                System.out.println("La taille du brelan renseigné est incorrecte. Veuillez recompter puis saisir la bonne taille de votre brelan.");
+                propositionBrelan = sc.nextInt();
+            }
         }
     }
     
     
+    public void demandeCarre() {
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println(pseudo + ", avez vous un carré de cartes supérieures à 9 ?");
+        if (sc.nextLine().compareTo("oui") == 0) {
+            System.out.println("Quelle est la valeur de la carte de votre carré (10, Valet, Dame, Roi, As)?");
+            int propositionCarre = sc.nextInt();            //proposition du joueur concernant la longueur de son plus grand carré
+
+            ArrayList listeValeurCartes = new ArrayList();
+            for (int i = 0; i< main.size(); i++){
+                if (main.get(i).getPointCarte() > 9){
+                    listeValeurCartes.add(main.get(i).getPointCarte());
+                }
+            }
+            Collections.sort(listeValeurCartes);
+            
+            int valeurTemporaire = 0;
+            
+            for (int i = 0; i<listeValeurCartes.size() - 3; i++){
+                if ((listeValeurCartes.get(i) == listeValeurCartes.get(i+1)) 
+                        && (listeValeurCartes.get(i) == listeValeurCartes.get(i+2)) 
+                        && (listeValeurCartes.get(i) == listeValeurCartes.get(i+3))){
+                    valeurTemporaire = (int) listeValeurCartes.get(i);
+                    if(valeurTemporaire >= valeurCarre){
+                        valeurCarre = valeurTemporaire;
+                    }
+                }
+            }
+            
+            //Tant que le joueur n'a pas proposé le bon nombre de cartes de sa main qui ont la même valeur, on lui repose la question.
+            while (propositionCarre != valeurCarre){
+                System.out.println("La taille du carré renseigné est incorrecte. Veuillez recompter puis saisir la bonne taille de votre carré.");
+                propositionCarre = sc.nextInt();
+            }
+        }
+    }
+
 
     public ArrayList<Carte> getMain() {
         return main;
@@ -438,6 +470,10 @@ public class Joueur {
 
     public int getScore() {
         return score;
+    }
+    
+    public String getPseudo() {
+        return pseudo;
     }
 
     public int getValeurPoint() {
@@ -456,11 +492,14 @@ public class Joueur {
         return valeurSequence;
     }
 
-    
-
-    public String getPseudo() {
-        return pseudo;
+    public int getValeurBrelan() {
+        return valeurBrelan;
     }
-    
+
+    public int getValeurCarre() {
+        return valeurCarre;
+    }
+
+
 
 }
