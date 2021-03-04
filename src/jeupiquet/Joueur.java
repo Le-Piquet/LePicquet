@@ -24,7 +24,6 @@ public class Joueur {
     private int ValeurCBC = 0;
     
     
-    
     public Joueur(String pseudo, int score) {
         this.pseudo = pseudo;
         this.score = score;
@@ -48,6 +47,9 @@ public class Joueur {
         }
     }
     
+    public hghgcv() {
+        return
+    }
     
     public Carte prendreCarte(int indexCarte) {
         Carte carteJoueur = main.get(indexCarte);
