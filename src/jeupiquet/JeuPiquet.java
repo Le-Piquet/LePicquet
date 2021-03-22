@@ -91,14 +91,18 @@ public class JeuPiquet {
         jeu.getJoueur1().demandeCarre();
         jeu.getJoueur2().demandeCarre();
         
+        jeu.calculerScoreBrelanCarre();
+        
         jeu.levees();
         
         //On déclare le vainqueur en fonction des points finaux des 2 joueurs.
+        System.out.println("Score de " + jeu.getJoueur1().getPseudo() + " : " + jeu.getJoueur1().getScore());
+        System.out.println("Score de " + jeu.getJoueur2().getPseudo() + " : " + jeu.getJoueur2().getScore());
         if (jeu.getJoueur1().getScore() > jeu.getJoueur2().getScore()){
-            System.out.println(jeu.getJoueur1().getPseudo() + "a gagné cette partie.");
+            System.out.println(jeu.getJoueur1().getPseudo() + " gagne cette partie.");
         }
         else if (jeu.getJoueur1().getScore() < jeu.getJoueur2().getScore()){
-            System.out.println(jeu.getJoueur2().getPseudo() + "a gagné cette partie.");
+            System.out.println(jeu.getJoueur2().getPseudo() + " gagne cette partie.");
         }
         else{
             System.out.println("Egalité !! Personne ne gagne cette fois-ci.");

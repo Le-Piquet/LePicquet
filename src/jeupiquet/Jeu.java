@@ -63,7 +63,7 @@ public class Jeu {
     
     //voirTalon() permet d'afficher le contenu du talon dans la console
     public void voirTalon() {
-        System.out.println("Voici les cartes restantes dans le talon : " + "\n");
+        System.out.println("\n" + "Voici les cartes restantes dans le talon : ");
         for (int i = 0; i < _talon.size(); i++) {
             System.out.println(_talon.get(i).toString());
         }
@@ -80,18 +80,11 @@ public class Jeu {
             getJoueur1().setScore(getJoueur1().getScore() + getJoueur1().getNbCartePoint());
             System.out.println(_joueur1.getPseudo() + " gagne la manche des points et remporte " + getJoueur1().getNbCartePoint() + " points.");
         }
-        else if (getJoueur1().getNbCartePoint() < getJoueur2().getNbCartePoint()){
-            System.out.println(_joueur1.getPseudo() + " gagne la manche des Points et remporte " + getJoueur1().getNbCartePoint() + " points.");
-        } else if (getJoueur1().getNbCartePoint() < getJoueur2().getNbCartePoint()) {
+        else if (getJoueur1().getNbCartePoint() < getJoueur2().getNbCartePoint()) {
             getJoueur2().setScore(getJoueur2().getScore() + getJoueur2().getNbCartePoint());
             System.out.println(_joueur2.getPseudo() + " gagne la manche des points et remporte " + getJoueur2().getNbCartePoint() + " points.");
         }
-        ////Si les tailles des points des 2 joueurs sont égales, on compare leurs valeurs.
-        else if (getJoueur1().getNbCartePoint() == getJoueur2().getNbCartePoint()){
-            if (getJoueur1().getValeurPoint() > getJoueur2().getValeurPoint()){
-                System.out.println(_joueur2.getPseudo() + " gagne la manche des Points et remporte " + getJoueur2().getNbCartePoint() + " points.");
-            }
-        } 
+        //Si les tailles des points des 2 joueurs sont égales, on compare leurs valeurs.
         else if (getJoueur1().getNbCartePoint() == getJoueur2().getNbCartePoint()) {
             if (getJoueur1().getValeurPoint() > getJoueur2().getValeurPoint()) {
                 getJoueur1().setScore(getJoueur1().getScore() + getJoueur1().getNbCartePoint());
@@ -102,14 +95,15 @@ public class Jeu {
                 System.out.println(_joueur2.getPseudo() + " gagne la manche des points et remporte " + getJoueur2().getNbCartePoint() + " points.");
             } 
             else if (getJoueur1().getValeurPoint() == getJoueur2().getValeurPoint()) {
+                System.out.println("Egalité sur les points ! Personne ne marque de points.");
             }
         }
     }
     
     //calculerScoreSequence() détermine qui gagne la phase des séquences en fonction de la taille de la plus grande séquence de chaque joueur.
     public void calculerScoreSequence() {
+        int pointsSequence = 0;
         if (getJoueur1().getTailleSequence() > getJoueur2().getTailleSequence()) {
-            int pointsSequence = 0;
             if (getJoueur1().getTailleSequence() == 3 || getJoueur1().getTailleSequence() == 4){
                 pointsSequence = getJoueur1().getTailleSequence();
             }
@@ -119,8 +113,7 @@ public class Jeu {
             System.out.println(_joueur1.getPseudo() + " gagne la manche des séquences et remporte " + pointsSequence + " points.");
             getJoueur1().setScore(getJoueur1().getScore() + pointsSequence);
         }
-        else if (getJoueur2().getTailleSequence() < getJoueur1().getTailleSequence()){
-            int pointsSequence = 0;
+        else if (getJoueur1().getTailleSequence() < getJoueur2().getTailleSequence()){
             if (getJoueur2().getTailleSequence() == 3 || getJoueur2().getTailleSequence() == 4){
                 pointsSequence = getJoueur2().getTailleSequence();
             }
@@ -133,22 +126,28 @@ public class Jeu {
         
         //Si les tailles des séquences des 2 joueurs sont égales, on compare leurs valeurs.
         else if (getJoueur1().getTailleSequence() == getJoueur2().getTailleSequence()){
+            if (getJoueur1().getTailleSequence() == 3 || getJoueur1().getTailleSequence() == 4){
+                pointsSequence = getJoueur1().getTailleSequence();
+            }
+            else if ((4 < getJoueur1().getTailleSequence()) && (getJoueur1().getTailleSequence()< 8)){
+                pointsSequence = getJoueur1().getTailleSequence() + 10;
+            }
             if (getJoueur1().getValeurSequence() > getJoueur2().getValeurSequence()){
-                getJoueur1().setScore(getJoueur1().getScore() + getJoueur1().getTailleSequence());
-                System.out.println(_joueur1.getPseudo() + " gagne la manche des séquences.");
+                getJoueur1().setScore(getJoueur1().getScore() + pointsSequence);
+                System.out.println(_joueur1.getPseudo() + " gagne la manche des séquences et remporte " + pointsSequence + " points.");
             } 
             else if (getJoueur1().getValeurSequence() < getJoueur2().getValeurSequence()) {
-                getJoueur2().setScore(getJoueur2().getScore() + getJoueur2().getTailleSequence());
-                System.out.println(_joueur2.getPseudo() + " gagne la manche des séquences.");
+                getJoueur2().setScore(getJoueur2().getScore() + pointsSequence);
+                System.out.println(_joueur2.getPseudo() + " gagne la manche des séquences et remporte " + pointsSequence + " points.");
             } 
             else if (getJoueur1().getValeurSequence() == getJoueur2().getValeurSequence()) {
+                System.out.println("Egalité sur les séquences ! Personne ne marque de points.");
             }
         }
     }
     
     
     public void calculerScoreBrelanCarre() {
-        Scanner sc = new Scanner(System.in);
         if (_joueur1.getValeurCarre() > _joueur2.getValeurCarre()) {
             _joueur1.setScore(_joueur1.getScore() + 14);
             System.out.println( _joueur1.getPseudo() + ", vous gagnez 14 points grace a votre carré" );
@@ -186,34 +185,43 @@ public class Jeu {
         int pointsAvantLvJ2 = _joueur2.getScore();
 
         while (!_joueur1.getMain().isEmpty()) {
+             
+            
             nbreManche = nbreManche + 1;
+            //On affiche les cartes restantes dans la main du joueur
+            gagnant.afficherMain();
             //On demande aux joueurs de donner la carte qu'ils souhaitent jouer.
             System.out.println(gagnant.getPseudo() + ", quelle carte de votre main voullez vous donner ?");
             refCarteJ1 = sc.nextInt();
-            System.out.println("La carte posé par " + gagnant.getPseudo() + " est " + gagnant.prendreCarte(refCarteJ1));
+            Carte carteGagnant = gagnant.prendreCarte(refCarteJ1);
+            System.out.println("La carte posé par " + gagnant.getPseudo() + " est " + carteGagnant);
+            
+            perdant.afficherMain();
             System.out.println(perdant.getPseudo() + ", quelle carte de votre main voullez vous donner ?");
             refCarteJ2 = sc.nextInt();
-            System.out.println("La carte posé par " + perdant.getPseudo() + " est " + perdant.prendreCarte(refCarteJ2));
+            Carte cartePerdant = perdant.prendreCarte(refCarteJ2);
+            System.out.println("La carte posé par " + perdant.getPseudo() + " est " + cartePerdant);
+            
             //Si les deux cartes sont de la meme couleur, on compare leurs valeurs.
-            if (gagnant.prendreCarte(refCarteJ1).getCouleur() == perdant.prendreCarte(refCarteJ2).getCouleur()) {
-                if (gagnant.prendreCarte(refCarteJ1).getPointCarte() < perdant.prendreCarte(refCarteJ2).getPointCarte()) {
-                    perdant.setScore(perdant.getScore() + 1);
-                    System.out.println(perdant.getPseudo() + " remporte le pli, il commence. ");
-                //Si le joueur 2 gagne, il devient le gagnant et c'est a lui de commencer le prochain pli.
-                    gagnant = _joueur2;
-                    perdant = _joueur1;
-                }
-                else if (gagnant.prendreCarte(refCarteJ1).getPointCarte() > perdant.prendreCarte(refCarteJ2).getPointCarte()) {
+            if (carteGagnant.getCouleur().compareTo(cartePerdant.getCouleur()) == 0) {
+                if (carteGagnant.getNumero().ordinal() > cartePerdant.getNumero().ordinal()) {
                     gagnant.setScore(gagnant.getScore() + 1);
-                    System.out.println(gagnant.getPseudo() + " remporte le pli, il commence ");
+                    System.out.println(gagnant.getPseudo() + " remporte le pli, il commence. ");
+                    //Si le joueur 2 gagne, il devient le gagnant et c'est a lui de commencer le prochain pli.
                     gagnant = _joueur1;
                     perdant = _joueur2;
+                }
+                else{
+                    perdant.setScore(perdant.getScore() + 1);
+                    System.out.println(perdant.getPseudo() + " remporte le pli, il commence ");
+                    gagnant = _joueur2;
+                    perdant = _joueur1;
                 }
             }
             
             else {
                 gagnant.setScore(gagnant.getScore() + 1);
-                System.out.println(gagnant.getPseudo() + " remporte le pli, il commence. ");
+                System.out.println(gagnant.getPseudo() + " remporte le pli et commence. ");
 
             }
             
@@ -223,13 +231,17 @@ public class Jeu {
                 if (gagnant.getScore() == pointsAvantLvJ1 + 6) {
                     gagnant.setScore(gagnant.getScore() - 6);
                     perdant.setScore(perdant.getScore() - 6);
-                
+                    System.out.println("Egalité sur les levées. Personne ne gagne de points.");
                 } else if (gagnant.getScore() == pointsAvantLvJ1 + 12) {
                     gagnant.setScore(gagnant.getScore() + 40);
+                    System.out.println("Bravo " + gagnant.getPseudo() + " vous avez gagné chaque manche des levées. Voici un bonus de 40 points.");
                 }
                 else if (perdant.getScore() == pointsAvantLvJ2 + 12) {
                     perdant.setScore(perdant.getScore() + 40);
+                    System.out.println("Bravo " + perdant.getPseudo() + " vous avez gagné chaque manche des levées. Voici un bonus de 40 points.");
                 }
+                gagnant.setScore(gagnant.getScore() + 10);
+                System.out.println(gagnant.getPseudo() + " vous avez gagné la dernière levée. Voici un bonus de 10 points.");
             }
         }     
     }

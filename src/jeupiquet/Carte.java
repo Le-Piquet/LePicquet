@@ -6,18 +6,19 @@
 package jeupiquet;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
 Fichier dans lequel les cartes utilisées dans le jeu sont crées.
  */
 public class Carte {
 
-    private String couleur;         //Couleur de la carte (trefle, pique, coeur, carreau)
-    private String numero;              //numéro de la carte
+    private Couleur couleur;         //Couleur de la carte (trefle, pique, coeur, carreau)
+    private Numero numero;              //numéro de la carte
     private int pointCarte;             //valeur numérique de la carte
     
 
-    public Carte(String couleur, String numero, int pointCarte) {
+    public Carte(Couleur couleur, Numero numero, int pointCarte) {
         this.couleur = couleur;
         this.numero = numero;
         this.pointCarte = pointCarte;
@@ -25,11 +26,24 @@ public class Carte {
 
     @Override
     public String toString() {
-        return "Carte{" + "couleur=" + couleur + ", numero=" + numero + '}' + "\n";
+        return numero + " de " + couleur + ";";
+    }
+    
+    //Ici, nous créons un comparateur de numéro de carte. Il sert a trier une liste de cartes en fonction des numéros de chaque carte.
+    public static Comparator<Carte> ComparatorNumeroCarte = new Comparator<Carte>(){
+        
+        @Override
+        public int compare(Carte carte1, Carte carte2){
+            return(int)(carte1.getNumero().ordinal() - carte2.getNumero().ordinal());
+        }
+    };
+
+    public Couleur getCouleur() {   
+        return couleur;
     }
 
-    public String getCouleur() {
-        return couleur;
+    public Numero getNumero() {
+        return numero;
     }
 
     public int getPointCarte() {
